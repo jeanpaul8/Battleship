@@ -23,10 +23,14 @@ stdlib.h
 -
 vector
 -
+algorithm
+-
 
 C:/BattleShip/main.cpp
 iostream
 -
 Comando.cpp
 C:/BattleShip/Comando.cpp
+chrono
+-
 

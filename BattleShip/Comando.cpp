@@ -10,6 +10,7 @@
 #include <time.h>
 #include<stdlib.h>
 #include <vector>
+#include <algorithm>
 
 
 using namespace std;
@@ -45,6 +46,8 @@ public:
         archivo->close();
         delete archivo;
     }
+
+
 
     virtual string generarComando()=0;
 
@@ -141,64 +144,88 @@ public:
 };
 
 
-class Attack:public Comando{
-public:
-    Attack(){};
-
-    string generarComando(){
 
 
-        class Attack : public Comando{
-        private:
-            vector<string>* posicionesValidas;
-        public:
-            vector<string> *getPosicionesValidas() const {
-                return posicionesValidas;
+
+class Attack : public Comando{
+    private:
+        vector<string>* posicionesValidas;
+    public:
+        vector<string> *getPosicionesValidas() const {
+            return posicionesValidas;
+        }
+
+        Attack() {
+            posicionesValidas = new vector<string>();
+        }
+
+        void llenarVec(){
+            for(int i = 1 ; i <= 10; i++ ){
+                posicionesValidas->push_back("A" + to_string(i));
+                posicionesValidas->push_back("B" + to_string(i));
+                posicionesValidas->push_back("C" + to_string(i));
+                posicionesValidas->push_back("D" + to_string(i));
+                posicionesValidas->push_back("E" + to_string(i));
+                posicionesValidas->push_back("F" + to_string(i));
+                posicionesValidas->push_back("G" + to_string(i));
+                posicionesValidas->push_back("H" + to_string(i));
+                posicionesValidas->push_back("I" + to_string(i));
+                posicionesValidas->push_back("J" + to_string(i));
             }
+        }
 
-            Attack() {
-                posicionesValidas = new vector<string>();
-            }
+        void printVec(){
+            for(auto elemento: *posicionesValidas)
+                cout << elemento << ", ";
+        }
 
-            void llenarVec(){
-                for(int i = 1 ; i <= 10; i++ ){
-                    posicionesValidas->push_back("A" + to_string(i));
-                    posicionesValidas->push_back("B" + to_string(i));
-                    posicionesValidas->push_back("C" + to_string(i));
-                    posicionesValidas->push_back("D" + to_string(i));
-                    posicionesValidas->push_back("E" + to_string(i));
-                    posicionesValidas->push_back("F" + to_string(i));
-                    posicionesValidas->push_back("G" + to_string(i));
-                    posicionesValidas->push_back("H" + to_string(i));
-                    posicionesValidas->push_back("I" + to_string(i));
-                    posicionesValidas->push_back("J" + to_string(i));
+        bool validarAtaque(string coord){
+            bool found = false;
+            for( auto elem : *posicionesValidas){
+                if( elem == coord){
+                    found = true;
+                    break;
                 }
             }
-
-            void printVec(){
-                for(auto elemento: *posicionesValidas)
-                    cout << elemento << ", ";
-            }
-
-            bool validarAtaque(string coord){
-                bool found = false;
-                for( auto elem : *posicionesValidas){
-                    if( elem == coord){
-                        found = true;
-                        break;
-                    }
-                }
-                if(found){
-                    posicionesValidas->erase(remove(posicionesValidas->begin(),posicionesValidas->end(), coord), posicionesValidas->end());
+            if(found){
+                posicionesValidas->erase(remove(posicionesValidas->begin(),posicionesValidas->end(), coord), posicionesValidas->end());
+            } else
+                return false;
+        }
+/*
+        string lados(string &word){
+            const string ps[10]={"A","B","C","D","E","F","G","H","I","J"};
+            string w;
+            for(int i=0;i<10;i++) {
+                if (ps[i] == word) {
+                    w = ps[i + 1];
                 }
             }
+            return w;
 
-            string generarComando(){
+        }
 
-            }
+        int arriba(int &x){
+            return x-1;
+        }
+*/
+        string atacar() {
+            srand(time(NULL));
+            int x = rand() % (10);
+            const string pos[10] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+            string word = pos[rand() % 10];
+            if (validarAtaque(word + to_string(x))) {
+                string z = "ATTACK=" + word + to_string(x) + "\n";
+                return z;
+            } else
+                atacar();
+        }
+
+        string generarComando(){
+            return atacar();
+        }
+
+    };
 
 
 
-        };
-    }
-};
