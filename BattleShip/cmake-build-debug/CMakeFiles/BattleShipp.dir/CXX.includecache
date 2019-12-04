@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/BattleShip/Comando.cpp
+string
+-
+fstream
+-
+sstream
+-
+map
+-
+iostream
+-
+time.h
+-
+stdlib.h
+-
+vector
+-
+
+C:/BattleShip/main.cpp
+iostream
+-
+Comando.cpp
+C:/BattleShip/Comando.cpp
+
